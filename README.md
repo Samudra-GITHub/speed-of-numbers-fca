@@ -45,9 +45,9 @@ FCA Assignment/
 
 The assignment requires 4 roles (**Builder**, **Measurer**, **Skeptic**, **Scribe**) rotated so that everyone leads each role at least once.
 
-- **You (User):** Primary Architect, Lead Builder (hardware upload & timing macros), Master Scribe (LaTeX authoring & synthesis).
-- **Teammate 2:** Lead Measurer (serial data collection & statistical sorting), Builder for Exp 2 & 6, Scribe for Exp 4.
-- **Teammate 3:** Lead Skeptic (compiler audit, `objdump` inspection, two's complement bug analysis), Builder for Exp 4, Scribe for Exp 3.
+- **Samudra:** Primary Architect, Lead Builder (hardware upload & timing macros), Master Scribe (LaTeX authoring & synthesis).
+- **Sindhu:** Lead Measurer (serial data collection & statistical sorting), Builder for Exp 2 & 6, Scribe for Exp 4.
+- **Gana:** Lead Skeptic (compiler audit, `objdump` inspection, two's complement bug analysis), Builder for Exp 4, Scribe for Exp 3.
 
 ---
 
