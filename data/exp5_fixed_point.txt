@@ -1,0 +1,23 @@
+=================================================================
+  EXPERIMENT 5: Invent Your Own Fractions (Fixed-Point Q16.16)
+=================================================================
+[Test 5.1] Binary Representation:
+  3.75  in Q16.16: Dec=PENDING, Hex=PENDING
+ -1.25 in Q16.16: Dec=PENDING, Hex=PENDING
+  Smallest positive step (1 LSB): 1 / 65536 = 0.000015258789
+  Representable Range: [-32768.0, +32767.9999847]
+
+[Test 5.2] Performance Comparison (Cycles per Op):
+Operation     | Q16.16 Cycles | Float Cycles  | Speedup Ratio
+--------------+---------------+---------------+--------------
+Addition      |       PENDING |       PENDING |       PENDING
+Multiplication|       PENDING |       PENDING |       PENDING
+Division      |       PENDING |       PENDING |       PENDING
+
+[Test 5.3] Accuracy vs Double Reference:
+  True Product:        PENDING
+  Float Product:       PENDING (Absolute Error: PENDING)
+  Q16.16 Product:      PENDING (Absolute Error: PENDING)
+
+% NOTE: Replace this file with the verbatim Serial Monitor capture from
+% speed_of_numbers.ino (command '5') once Experiment 5 has been run.

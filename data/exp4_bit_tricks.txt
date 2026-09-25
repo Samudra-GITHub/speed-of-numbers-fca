@@ -1,0 +1,22 @@
+=================================================================
+  EXPERIMENT 4: Are Bit Tricks Really Faster?
+=================================================================
+[Test 4.1] Positive Integer: Constant Divisor vs Arithmetic Shift
+  x / 8  (Constant Literal)     -> Min: PENDING cycles | Per-Op: PENDING cycles
+  x >> 3 (Arithmetic Shift)     -> Min: PENDING cycles | Per-Op: PENDING cycles
+  x / div (Volatile Variable)   -> Min: PENDING cycles | Per-Op: PENDING cycles
+
+[Test 4.2] Modulo vs Bitwise AND (Remainder)
+  x % 16 (Constant Literal)     -> Min: PENDING cycles | Per-Op: PENDING cycles
+  x & 15 (Bitwise AND Mask)     -> Min: PENDING cycles | Per-Op: PENDING cycles
+  x % mod (Volatile Variable)   -> Min: PENDING cycles | Per-Op: PENDING cycles
+
+[Test 4.3] The Two's Complement Pitfall with Negative Numbers:
+  Value x = -9
+  x in 32-bit binary: PENDING
+  Arithmetic: x / 8  = PENDING
+  Bit-shift:  x >> 3 = PENDING
+  Are they equal? -> PENDING
+
+% NOTE: Replace this file with the verbatim Serial Monitor capture from
+% speed_of_numbers.ino (command '4') once Experiment 4 has been run.

@@ -1,0 +1,21 @@
+=================================================================
+  EXPERIMENT 6: The Hidden Cost of Printing (Formatting vs UART)
+=================================================================
+[Test 6.1] In-Memory Formatting Cost (snprintf):
+  Integer Decimal (%d)         -> Min Cycles / Conversion: PENDING
+  Integer Hexadecimal (%X)     -> Min Cycles / Conversion: PENDING
+  Float Format (%.2f)          -> Min Cycles / Conversion: PENDING
+  Float High-Prec (%.6f)       -> Min Cycles / Conversion: PENDING
+
+[Test 6.2] Physical UART Transmission Time @ 115200 Baud:
+  UART Framing: 1 start bit + 8 data bits + 1 stop bit = 10 bits/char.
+  Theoretical Time per Character: 10 / 115200 = 86.806 microseconds.
+  Theoretical Cycles per Character at 240 MHz: 20833 cycles.
+
+  Measured 1 Character Physical Flush:
+    Elapsed Time:   PENDING microseconds
+    Elapsed Cycles: PENDING clock cycles
+    Equivalent 32-bit Integer Additions (1 cycle each): PENDING
+
+% NOTE: Replace this file with the verbatim Serial Monitor capture from
+% speed_of_numbers.ino (command '6') once Experiment 6 has been run.

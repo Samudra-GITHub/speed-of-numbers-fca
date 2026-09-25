@@ -1,0 +1,63 @@
+\section{Master Latency Comparison \& Summary Chart}
+
+\subsection{Cross-Experiment Comparative Synthesis}
+% TODO(Team): This table must be populated only after all seven experiments
+% (Experiments 1-6 and the Final Challenge) have been run on physical hardware
+% and their data/*.txt files are populated. Pull the Min/Median cycle figures
+% from each experiment's Observations table into the rows below.
+\textit{[Pending: no hardware measurements recorded yet across the experiment suite. This master comparison table and its logarithmic chart will be assembled once all individual experiment data files in \texttt{data/} are populated.]}
+
+\begin{table}[htbp]
+\centering
+\caption{Comprehensive Master Latency Reference Table on ESP32 ($240\,\text{MHz}$) --- Pending Data}
+\label{tab:master_comparison}
+\small
+\begin{tabularx}{\textwidth}{l l X X X}
+\toprule
+\textbf{Category} & \textbf{Operation / Expression} & \textbf{Cycles / Op} & \textbf{Time ($\mu$s / ns)} & \textbf{Implementation Layer} \\
+\midrule
+Integer Arithmetic & \texttt{int32\_t} Addition ($+$) & PENDING & PENDING & Native 32-bit ALU \\
+Integer Arithmetic & \texttt{int32\_t} Multiplication ($*$) & PENDING & PENDING & Hardware Multiplier \\
+Integer Arithmetic & \texttt{int32\_t} Division ($/$) & PENDING & PENDING & Hardware Divider \\
+Integer Arithmetic & \texttt{int64\_t} Division ($/$) & PENDING & PENDING & Software Emulation \\
+Floating-Point & \texttt{float} Addition ($+$) & PENDING & PENDING & Hardware FPU \\
+Floating-Point & \texttt{double} Addition ($+$) & PENDING & PENDING & Soft-Float Emulation \\
+Fixed-Point Math & Q16.16 Multiplication ($*$) & PENDING & PENDING & 64-bit Mul + Shift \\
+Text Formatting & \texttt{snprintf} Decimal (\texttt{\%d}) & PENDING & PENDING & In-Memory Radix Conversion \\
+Peripheral I/O & Physical ADC Read (\texttt{analogRead}) & PENDING & PENDING & Successive-Approximation SAR \\
+Peripheral I/O & UART 1-Char Flush (115200 Baud) & PENDING & PENDING & 10-Bit Asynchronous Frame \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Summary Latency Spectrum Chart}
+% TODO(Team): Populate the \addplot coordinates below with real Min-Cycle
+% measurements once every experiment has been executed. Do not fill in
+% placeholder or estimated values.
+\textit{[Pending: chart renders an empty/placeholder axis until data is available.]}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xbar,
+    xmode=log,
+    width=0.92\textwidth,
+    height=4cm,
+    xmin=0.5,
+    xmax=50000,
+    xlabel={Execution Latency in CPU Clock Cycles ($240\,\text{MHz}$, Logarithmic Scale) --- Awaiting Hardware Measurement Data},
+    symbolic y coords={Placeholder},
+    ytick=data,
+    bar width=8pt,
+    fill=primaryBlue!80,
+    draw=primaryBlue!50!black,
+    grid=major,
+    grid style={dashed, gray!30}
+]
+% \addplot coordinates { } % TODO(Team): populate once measurements exist
+\end{axis}
+\end{tikzpicture}
+\caption{Logarithmic Latency Spectrum of Numerical Operations on ESP32 ($240\,\text{MHz}$). Awaiting hardware measurement data from all seven experiments.}
+\label{fig:summary_chart}
+\end{figure}

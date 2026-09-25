@@ -1,0 +1,33 @@
+\section{Experiment 3: Float versus Double (Hardware FPU vs. Soft-Float)}
+
+\subsection{Aim}
+To evaluate the execution speed of single-precision (\texttt{float}) versus double-precision (\texttt{double}) arithmetic, determine the hardware capabilities of the ESP32's floating-point unit (FPU), and uncover the performance hazards of untyped floating-point constants.
+
+\subsection{Background}
+The Tensilica Xtensa LX6 architecture implemented in the ESP32 contains a hardware single-precision floating-point coprocessor conforming to ANSI/IEEE Std 754-1985. It includes dedicated 32-bit floating-point registers (f0--f15) and hardware instructions for single-precision addition, subtraction, multiplication, and fused multiply-accumulate. Crucially, the ESP32 lacks a double-precision (64-bit) FPU. Any operation involving a \texttt{double} operand must be synthesized in software using GCC runtime emulation routines (such as \texttt{\_\_adddf3}, \texttt{\_\_muldf3}, and \texttt{\_\_divdf3}). In C and C++, untyped floating-point literals (e.g., \texttt{0.5}) are strictly treated as \texttt{double} by default, whereas literals suffixed with \texttt{f} (e.g., \texttt{0.5f}) are treated as \texttt{float}.
+
+\subsection{Prediction (Recorded Prior to Measurement)}
+% TODO(Team): Record your hypothesis here BEFORE running the firmware.
+% Expected float vs double cycle counts for add/mul/div/sqrt, and the
+% expected penalty of omitting the 'f' suffix on a literal.
+\textit{[Pending: team hypothesis not yet recorded.]}
+
+\subsection{Method}
+We instantiated volatile \texttt{float} and \texttt{double} variables and benchmarked addition, multiplication, division, and square root across 10 trials of 100 unrolled operations. We specifically evaluated the literal performance penalty by comparing \texttt{f = f * 0.5f} directly against \texttt{f = f * 0.5}.
+
+\subsection{Observations}
+% Data source: ../data/exp3_floats.txt (raw Serial Monitor capture from speed_of_numbers.ino, command '3')
+\textit{[Pending: no hardware measurements recorded yet. Run Experiment 3 on the ESP32 and populate \texttt{data/exp3\_floats.txt}.]}
+
+\subsection{Analysis}
+\textit{[Pending: analysis withheld until measurements are collected.]}
+
+\subsection{What We Learnt}
+\textit{[Pending.]}
+
+\subsection{LLM Log}
+\begin{llmbox}[LLM Prediction Test: Double Division Latency]
+\textbf{Prompt to LLM:} \textit{[Pending: record the verbatim prompt given to the LLM.]} \\
+\textbf{LLM Response Summary:} \textit{[Pending.]} \\
+\textbf{Board Agreement:} \textit{[Pending.]}
+\end{llmbox}

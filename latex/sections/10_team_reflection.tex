@@ -1,0 +1,30 @@
+\section{Team Reflection \& LLM Investigation Analysis}
+
+\subsection{Team Member Roles and Collaboration Dynamics}
+Conducting this investigation as a three-member team required structured task coordination, clear separation of investigative concerns, and systematic role rotation across the seven experimental modules, per the role matrix in Section~1 (System Overview \& Toolbox Foundations).
+
+\begin{itemize}[leftmargin=1.5em, itemsep=6pt]
+    \item \textbf{User (Lead Builder \& Master Scribe):}
+    \begin{itemize}[noitemsep]
+        \item \textit{Builder Responsibilities:} Authored the master Arduino benchmarking suite (\texttt{speed\_of\_numbers.ino}), engineered the interactive serial command dispatch system, implemented the cycle-timing harness, and integrated inline assembly memory barriers (\texttt{asm volatile("" : "+r"(x))}) to defeat dead-code elimination.
+        \item \textit{Scribe Responsibilities:} Engineered the modular \LaTeX{} documentation framework, structured the technical analyses, typeset the mathematical formulations, and maintains the comparative data tables and TikZ visualization plots.
+    \end{itemize}
+
+    \item \textbf{Teammate 2 (Lead Measurer \& Verifier):}
+    \begin{itemize}[noitemsep]
+        \item \textit{Measurer Responsibilities:} Executes the physical benchmarking test batteries over the $115200\,\text{baud}$ Serial interface, conducts independent trials for every operational configuration, performs statistical sorting for median and minimum isolation, and archives the raw serial monitor logs.
+        \item \textit{Cross-Role Participation:} Assumes the Builder role for Experiment~2 and Experiment~6, and the Scribe role for Experiment~4 (per the role matrix).
+    \end{itemize}
+
+    \item \textbf{Teammate 3 (Lead Skeptic \& Hardware Auditor):}
+    \begin{itemize}[noitemsep]
+        \item \textit{Skeptic Responsibilities:} Challenges each empirical observation once produced, audits disassembled machine code using \texttt{objdump} to verify the compiler behavior, and investigates edge cases such as negative-number bit-shift semantics.
+        \item \textit{Cross-Role Participation:} Assumes the Builder role for Experiment~4, the Measurer role for Experiment~2 and Experiment~6, and the Scribe role for Experiment~3 (per the role matrix).
+    \end{itemize}
+\end{itemize}
+
+\subsection{What We Learnt About Using an LLM to Investigate Systems}
+% TODO(Team): This section must be written from the team's actual LLM
+% interaction logs recorded in each experiment's LLM Log box. Do not draft
+% conclusions about LLM accuracy or limitations before those logs exist.
+\textit{[Pending: to be written after all experiments' LLM Log boxes are populated with real interaction records. Summarize where the LLM was useful, where it was wrong or imprecise, and how the "Board is the Judge, Not the LLM" principle played out in practice.]}

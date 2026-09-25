@@ -1,0 +1,104 @@
+\documentclass[10pt,a4paper]{article}
+
+\input{preamble}
+
+\begin{document}
+
+% ==============================================================================
+% TITLE & METADATA BLOCK
+% ==============================================================================
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+    {\Huge \bfseries \color{primaryBlue} The Speed of Numbers}\\[0.4cm]
+    {\Large \bfseries \color{secondaryTeal} A Team Investigation into Representation and Latency on the ESP32}\\[0.8cm]
+    
+    \rule{\linewidth}{1.2pt}\\[0.4cm]
+    
+    \begin{minipage}{0.48\textwidth}
+        \textbf{Course:} Foundations of Computer Architecture (FCA)\\
+        \textbf{Platform:} ESP32 Dev Board (Xtensa LX6 @ 240 MHz)\\
+        \textbf{Toolchain:} Arduino IDE / \texttt{xtensa-esp32-elf-gcc}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \raggedleft
+        \textbf{Team Name:} \textit{Latency Pioneers}\\
+        \textbf{Team Members (3):}\\
+        1. Lead Builder \& Master Scribe: \textbf{User}\\
+        2. Lead Measurer \& Verifier: \textbf{Teammate 2}\\
+        3. Lead Skeptic \& Hardware Auditor: \textbf{Teammate 3}\\
+        \textbf{Submission Date:} \today
+    \end{minipage}
+    \vspace{0.4cm}
+    \rule{\linewidth}{1.2pt}
+    
+    \vspace{0.8cm}
+    
+    \begin{abstract}
+    \noindent In embedded systems design and systems engineering, the choice of numerical representation is often treated as an abstract mathematical decision. However, in physical microcontrollers, every bit-width and data type exerts a physical cost in terms of register pressure, ALU cycles, bus contention, and software emulation latency. This investigation explores the latency profile of the Espressif ESP32 dual-core Xtensa LX6 microprocessor clocked at 240\,MHz. Utilizing hardware cycle counting via the \texttt{CCOUNT} register, loop overhead baseline subtraction, and compiler optimization barriers, our 3-member team designed six targeted micro-benchmarks and one real-time sensor processing challenge investigating: (1) the accuracy of a calibrated software cycle counter; (2) the execution penalty across 8-bit, 16-bit, 32-bit, and 64-bit integer widths; (3) the performance relationship between single-precision hardware FPU operations and soft-float double-precision emulation, including the implicit promotion behavior of \texttt{x * 0.5}; (4) the limits and semantic behavior of bitwise arithmetic shortcuts on negative numbers in two's complement; (5) the speed-accuracy tradeoffs of custom fixed-point Q16.16 arithmetic; (6) the latency relationship between transmitting an ASCII character over UART and CPU arithmetic throughput; and (7) the engineering feasibility of a 10\,kHz real-time sensor pipeline. \textbf{All quantitative results are pending physical hardware measurement} and will be reported here once collected.
+    \end{abstract}
+
+    \vspace{0.6cm}
+
+    % Summary Box of the Three Mandatory Questions
+    \begin{calloutbox}[Executive Takeaways: The Three Guiding Questions]
+    % TODO(Team): Answer these three questions only after all experiments are
+    % complete and their Observations/Analysis sections are populated.
+    \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+        \item \textbf{What did we expect, what actually happened, and why?} \\
+        \textit{[Pending: to be written after all experiments are measured.]}
+        \item \textbf{What does this tell us about how the ESP32 represents and processes numbers?} \\
+        \textit{[Pending.]}
+        \item \textbf{What would we do differently when writing real code, now that we know this?} \\
+        \textit{[Pending.]}
+    \end{itemize}
+    \end{calloutbox}
+    
+    \vfill
+    {\small \color{gray} Final Submission Report for FCA Team Lab Investigation}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ==============================================================================
+% SECTIONS
+% ==============================================================================
+
+\input{sections/00_intro_toolbox}
+\newpage
+
+\input{sections/01_experiment1}
+\newpage
+
+\input{sections/02_experiment2}
+\newpage
+
+\input{sections/03_experiment3}
+\newpage
+
+\input{sections/04_experiment4}
+\newpage
+
+\input{sections/05_experiment5}
+\newpage
+
+\input{sections/06_experiment6}
+\newpage
+
+\input{sections/07_final_challenge}
+\newpage
+
+\input{sections/08_summary_comparison}
+\newpage
+
+\input{sections/09_biggest_surprise}
+\newpage
+
+\input{sections/10_team_reflection}
+\newpage
+
+\input{sections/11_appendix_code}
+
+\end{document}

@@ -1,0 +1,39 @@
+\section{Experiment 6: The Hidden Cost of Printing (Formatting \& Serial Latency)}
+
+\subsection{Aim}
+To measure the computational overhead of converting numerical representations into human-readable ASCII text in memory, determine the physical transmission latency of UART communication at 115200 baud, and contrast I/O delays against pure CPU arithmetic throughput.
+
+\subsection{Background}
+Converting binary values to text constitutes a representation transformation that requires substantial algorithmic processing.
+\begin{itemize}[noitemsep]
+    \item \textbf{Decimal Formatting:} Transforming an integer to decimal text requires repeated modulo and division operations by 10 (base-10 radix conversion), which cannot be implemented using simple binary bit shifts.
+    \item \textbf{Floating-Point Formatting:} Formatting a floating-point number into ASCII requires separating the sign, biased exponent, and mantissa, scaling by powers of 10, performing rounding, and emitting character buffers (e.g., via the Dragon4 or Grisu algorithm).
+    \item \textbf{Hexadecimal Formatting:} Converting to hexadecimal is inherently fast because each hex character maps directly to a 4-bit nibble, requiring only bit shifts and masking (\texttt{\& 0x0F}).
+    \item \textbf{UART Framing at 115200 Baud:} Physical asynchronous serial communication over UART uses an 8-N-1 frame: 1 start bit, 8 data bits, no parity bit, and 1 stop bit, totaling \textbf{10 physical bit periods per character}.
+\end{itemize}
+
+\subsection{Prediction (Recorded Prior to Measurement)}
+% TODO(Team): Record your hypothesis here BEFORE running the firmware.
+% Expected snprintf cost per format specifier; expected UART transmission
+% latency (theoretical calc is fine here since it's arithmetic, not a measurement).
+\textit{[Pending: team hypothesis not yet recorded.]}
+
+\subsection{Method}
+We benchmarked in-memory conversions using \texttt{snprintf()} across 50 iterations over 10 trials to isolate pure CPU conversion time without UART transmission. We then transmitted a single ASCII character (\texttt{'A'}) over the hardware UART, calling \texttt{Serial.flush()} to ensure complete transmission out of the hardware FIFO, timing the duration using \texttt{micros()} and \texttt{ESP.getCycleCount()}.
+
+\subsection{Observations}
+% Data source: ../data/exp6_printing.txt (raw Serial Monitor capture from speed_of_numbers.ino, command '6')
+\textit{[Pending: no hardware measurements recorded yet. Run Experiment 6 on the ESP32 and populate \texttt{data/exp6\_printing.txt}.]}
+
+\subsection{Analysis}
+\textit{[Pending: analysis withheld until measurements are collected.]}
+
+\subsection{What We Learnt}
+\textit{[Pending.]}
+
+\subsection{LLM Log}
+\begin{llmbox}[LLM Interaction Record: UART Serial Baud Rate Math]
+\textbf{Prompt to LLM:} \textit{[Pending: record the verbatim prompt given to the LLM.]} \\
+\textbf{LLM Response Summary:} \textit{[Pending.]} \\
+\textbf{Board Agreement:} \textit{[Pending.]}
+\end{llmbox}

@@ -1,0 +1,47 @@
+\section*{Appendix: Arduino Source Code Reference}
+\addcontentsline{toc}{section}{Appendix: Arduino Source Code Reference}
+
+The complete source code for all six experiments and the Final Challenge is implemented in the accompanying Arduino sketch:
+\begin{center}
+\texttt{code/speed\_of\_numbers/speed\_of\_numbers.ino}
+\end{center}
+
+\subsection*{Key Implementation Snippets}
+
+\subsubsection*{1. Amortized Cycle Measurement with Optimization Barriers}
+\begin{lstlisting}[language=C, caption={Cycle Counting Harness with Inline Assembly Barrier}]
+#define PREVENT_OPTIMIZATION(x) asm volatile("" : "+r"(x))
+
+// Timing harness around unrolled block
+uint32_t t0 = ESP.getCycleCount();
+for (int k = 0; k < 10; k++) {
+    c = a + b; c = a + b; c = a + b; c = a + b; c = a + b;
+    c = a + b; c = a + b; c = a + b; c = a + b; c = a + b;
+}
+uint32_t t1 = ESP.getCycleCount();
+uint32_t netCycles = (t1 - t0) - baselineOverhead;
+\end{lstlisting}
+
+\subsubsection*{2. Fixed-Point Q16.16 Macro Definitions}
+\begin{lstlisting}[language=C, caption={Q16.16 Arithmetic Macros}]
+typedef int32_t fixed_q16;
+#define TO_Q16(x)     ((fixed_q16)((x) * 65536.0f + ((x) >= 0 ? 0.5f : -0.5f)))
+#define FROM_Q16(x)   (((float)(x)) / 65536.0f)
+#define Q16_ADD(a, b) ((a) + (b))
+#define Q16_MUL(a, b) ((fixed_q16)(((int64_t)(a) * (b)) >> 16))
+#define Q16_DIV(a, b) ((fixed_q16)((((int64_t)(a)) << 16) / (b)))
+\end{lstlisting}
+
+\subsubsection*{3. Optimized Sensor Pipeline (Integer Scaling)}
+\begin{lstlisting}[language=C, caption={Integer ADC Millivolt Conversion and 8-Sample Moving Average}]
+const int32_t K = 52813; // round((3300 / 4095) * 65536)
+
+// Sensor pipeline execution
+int32_t raw = analogRead(34);
+int32_t mv = (raw * K) >> 16;       // Scale to millivolts
+sum -= history[idx];
+history[idx] = mv;
+sum += mv;
+idx = (idx + 1) & 7;
+int32_t avg = sum >> 3;             // Division by 8 via bit-shift
+\end{lstlisting}

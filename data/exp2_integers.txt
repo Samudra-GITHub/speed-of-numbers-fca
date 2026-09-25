@@ -1,0 +1,25 @@
+=================================================================
+  EXPERIMENT 2: Is Smaller Faster? (Integer Widths & Types)
+=================================================================
+Type        | Operation   | Min (Total) | Median (Tot) | Cycles / Op
+------------+-------------+-------------+--------------+------------
+int8_t      | Add (+)     |     PENDING |      PENDING |     PENDING
+int16_t     | Add (+)     |     PENDING |      PENDING |     PENDING
+int32_t     | Add (+)     |     PENDING |      PENDING |     PENDING
+uint32_t    | Add (+)     |     PENDING |      PENDING |     PENDING
+int64_t     | Add (+)     |     PENDING |      PENDING |     PENDING
+------------+-------------+-------------+--------------+------------
+int8_t      | Multiply (*) |    PENDING |      PENDING |     PENDING
+int16_t     | Multiply (*) |    PENDING |      PENDING |     PENDING
+int32_t     | Multiply (*) |    PENDING |      PENDING |     PENDING
+uint32_t    | Multiply (*) |    PENDING |      PENDING |     PENDING
+int64_t     | Multiply (*) |    PENDING |      PENDING |     PENDING
+------------+-------------+-------------+--------------+------------
+int8_t      | Divide (/)  |     PENDING |      PENDING |     PENDING
+int16_t     | Divide (/)  |     PENDING |      PENDING |     PENDING
+int32_t     | Divide (/)  |     PENDING |      PENDING |     PENDING
+uint32_t    | Divide (/)  |     PENDING |      PENDING |     PENDING
+int64_t     | Divide (/)  |     PENDING |      PENDING |     PENDING
+
+% NOTE: Replace this file with the verbatim Serial Monitor capture from
+% speed_of_numbers.ino (command '2') once Experiment 2 has been run.

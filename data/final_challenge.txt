@@ -1,0 +1,26 @@
+=================================================================
+  FINAL CHALLENGE: Meet a Latency Budget (10 kHz Sensor Loop)
+=================================================================
+Target Rate: 10,000 samples/sec -> Period = 100.0 microseconds (24,000 cycles)
+
+[Step 1] Hardware analogRead(34) Latency:
+  Min Cycles: PENDING cycles (PENDING microseconds)
+  Consumes PENDING% of total 10 kHz cycle budget.
+
+[Step 2] Arithmetic Pipeline Comparison:
+Implementation | Arithmetic Cycles | Time (us) | Total with ADC (us) | Budget Used @ 10kHz
+---------------+-------------------+-----------+---------------------+--------------------
+Double (Soft)  |            PENDING|   PENDING |              PENDING|             PENDING
+Float (FPU)    |            PENDING|   PENDING |              PENDING|             PENDING
+Integer (Opt)  |            PENDING|   PENDING |              PENDING|             PENDING
+
+[Step 3] Full 12-Bit Input Range Error Sweep (0 - 4095):
+  1 ADC LSB Resolution: 0.8059 mV
+  Max Float Error vs Double:   PENDING mV
+  Max Integer Error vs Double: PENDING mV
+
+[Step 4] Architectural Recommendation:
+  PENDING - to be written after measurements are collected and analyzed.
+
+% NOTE: Replace this file with the verbatim Serial Monitor capture from
+% speed_of_numbers.ino (command '7') once the Final Challenge has been run.

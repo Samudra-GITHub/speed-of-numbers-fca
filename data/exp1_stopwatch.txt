@@ -1,0 +1,20 @@
+=================================================================
+  EXPERIMENT 1: Build a Stopwatch You Can Trust
+=================================================================
+Current CPU Frequency: [PENDING - query via getCpuFrequencyMhz()]
+Calibrated Baseline Harness Overhead: [PENDING] cycles
+
+[Test 1.1] 32-bit Integer Addition (100 unrolled ops):
+  Min Total: [PENDING] cycles | Median: [PENDING] cycles | Per-Op Min: [PENDING] cycles | Per-Op Median: [PENDING] cycles
+
+[Test 1.2] Addition WITHOUT 'volatile' (Dead-Code Elision Test):
+  Raw Measured Cycles: [PENDING] cycles
+
+[Test 1.3] Sample Size Comparison:
+  N = 10 ops   -> Per-Op Min: [PENDING] cycles
+  N = 1000 ops -> Per-Op Min: [PENDING] cycles
+  Checksum accumulator: [PENDING]
+
+% NOTE: Paste the raw Serial Monitor output from speed_of_numbers.ino (command '1')
+% verbatim below this line once Experiment 1 has been run on physical hardware.
+% Do not hand-type numbers here — copy the terminal capture exactly as printed.

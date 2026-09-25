@@ -1,0 +1,54 @@
+\section{Experiment 1: Build a Stopwatch You Can Trust}
+
+\subsection{Aim}
+To design, implement, and validate a cycle-accurate software stopwatch on the ESP32 that isolates the true microarchitectural cost of an operation by calibrating and subtracting the measurement harness and loop overhead.
+
+\subsection{Background}
+The Xtensa LX6 microprocessor integrates an internal 32-bit cycle count register (\texttt{CCOUNT}) that increments once per CPU clock cycle ($4.167\,\text{ns}$ at $240\,\text{MHz}$). The Arduino framework exposes this through \texttt{ESP.getCycleCount()}. However, naive timing introduces significant systematic error due to timer access latency and loop branch overhead. Moreover, aggressive compiler optimization (\texttt{-O2}) can eliminate calculations whose results are not observed outside the loop. Reliable micro-benchmarking requires loop unrolling, baseline harness subtraction, and the use of the \texttt{volatile} qualifier or compiler memory clobbers to prevent dead-code elimination.
+
+\subsection{Prediction (Recorded Prior to Measurement)}
+% TODO(Team): Record your hypothesis here BEFORE running the firmware.
+% What cycle count do you expect for a single-cycle 32-bit add? What do you
+% expect to happen with volatile removed? What do you expect at N=10 vs N=1000?
+\textit{[Pending: team hypothesis not yet recorded.]}
+
+\subsection{Method}
+We constructed a dual-phase benchmark function in \texttt{speed\_of\_numbers.ino}:
+\begin{enumerate}[noitemsep]
+    \item \textbf{Baseline Loop Calibration:} We measured an empty loop block consisting of 10 outer iterations unrolled 10 times with an inline assembly nop clobber (\texttt{asm volatile("")}) across 10 trials. The minimum measured latency represents the baseline harness overhead $C_{\text{base}}$.
+    \item \textbf{Payload Execution:} We executed the identical loop structure containing 100 unrolled additions of two volatile 32-bit signed integers ($c = a + b$).
+    \item \textbf{Repetition Comparison:} We executed the benchmark at $N = 10$ and $N = 1000$ operations.
+    \item \textbf{Statistical Treatment:} We executed 10 independent trials, discarded the first trial to prime the instruction cache, and recorded the minimum, median, and mean net cycles.
+\end{enumerate}
+
+\begin{lstlisting}[language=C, caption={Cycle Counting Harness Implementation}]
+uint32_t t0 = ESP.getCycleCount();
+for (int i = 0; i < 10; i++) {
+    // 10 iterations * 10 unrolls = 100 operations
+    c = a + b; c = a + b; c = a + b; c = a + b; c = a + b;
+    c = a + b; c = a + b; c = a + b; c = a + b; c = a + b;
+}
+uint32_t t1 = ESP.getCycleCount();
+uint32_t netCycles = (t1 - t0) - baselineOverhead;
+float cyclesPerOp = (float)netCycles / 100.0f;
+\end{lstlisting}
+
+\subsection{Observations}
+% Data source: ../data/exp1_stopwatch.txt (raw Serial Monitor capture from speed_of_numbers.ino, command '1')
+% TODO(Team): Import the measured table here once data/exp1_stopwatch.txt is populated.
+\textit{[Pending: no hardware measurements recorded yet. Run Experiment 1 on the ESP32 and populate \texttt{data/exp1\_stopwatch.txt}.]}
+
+\subsection{Analysis}
+% TODO(Team): Write analysis only after real measurements exist above.
+\textit{[Pending: analysis withheld until measurements are collected.]}
+
+\subsection{What We Learnt}
+% TODO(Team): 3-5 sentence conceptual takeaway, written after Analysis is complete.
+\textit{[Pending.]}
+
+\subsection{LLM Log}
+\begin{llmbox}[LLM Interaction Record: Stopwatch Design]
+\textbf{Prompt to LLM:} \textit{[Pending: record the verbatim prompt given to the LLM.]} \\
+\textbf{LLM Response Summary:} \textit{[Pending: summarize the LLM's claim/prediction.]} \\
+\textbf{Board Agreement:} \textit{[Pending: state whether the physical hardware confirmed, contradicted, or partially matched the LLM's claim, and why.]}
+\end{llmbox}

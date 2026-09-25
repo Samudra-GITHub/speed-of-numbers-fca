@@ -1,0 +1,19 @@
+=================================================================
+  EXPERIMENT 3: Float versus Double (Hardware FPU vs Soft-Float)
+=================================================================
+Type        | Operation   | Min (Total) | Median (Tot) | Cycles / Op
+------------+-------------+-------------+--------------+------------
+float       | Add (+)     |     PENDING |      PENDING |     PENDING
+double      | Add (+)     |     PENDING |      PENDING |     PENDING
+float       | Multiply (*)|     PENDING |      PENDING |     PENDING
+double      | Multiply (*)|     PENDING |      PENDING |     PENDING
+float       | Divide (/)  |     PENDING |      PENDING |     PENDING
+double      | Divide (/)  |     PENDING |      PENDING |     PENDING
+float       | sqrtf()     |     PENDING |      PENDING |     PENDING
+double      | sqrt()      |     PENDING |      PENDING |     PENDING
+------------+-------------+-------------+--------------+------------
+float       | x * 0.5f    |     PENDING |      PENDING |     PENDING
+float       | x * 0.5     |     PENDING |      PENDING |     PENDING
+
+% NOTE: Replace this file with the verbatim Serial Monitor capture from
+% speed_of_numbers.ino (command '3') once Experiment 3 has been run.

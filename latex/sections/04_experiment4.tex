@@ -1,0 +1,41 @@
+\section{Experiment 4: Are Bit Tricks Really Faster? (Compiler Optimization \& Two's Complement)}
+
+\subsection{Aim}
+To examine whether bit shifts and bitwise masks execute faster than division and modulo operations, identify the conditions under which compiler strength reduction renders such manual micro-optimizations redundant, and uncover semantic discrepancies when processing negative numbers in two's complement representation.
+
+\subsection{Background}
+Programmers frequently substitute power-of-two division and modulo operations with bitwise operations:
+\begin{equation}
+    x / 8 \stackrel{?}{\iff} x \gg 3, \qquad x \pmod{16} \stackrel{?}{\iff} x \ \& \ 15
+\end{equation}
+Modern optimizing compilers (\texttt{xtensa-esp32-elf-gcc}) automatically perform \textit{strength reduction}, substituting constant divisions with shift and mask instructions. However, if the divisor is stored in a runtime variable (or declared \texttt{volatile}), the compiler is precluded from assuming a constant power-of-two and must emit a full hardware division instruction (\texttt{quos}). Furthermore, in the ISO C standard, integer division \textbf{truncates toward zero}, whereas an arithmetic right shift on a signed integer performs a \textbf{floor toward negative infinity} ($\lfloor \cdot \rfloor$).
+
+\subsection{Prediction (Recorded Prior to Measurement)}
+% TODO(Team): Record your hypothesis here BEFORE running the firmware.
+% Constant-divisor vs shift; variable-divisor vs shift; behavior at x = -9.
+\textit{[Pending: team hypothesis not yet recorded.]}
+
+\subsection{Method}
+We executed unrolled loops of 100 operations across 10 trials comparing:
+\begin{enumerate}[noitemsep]
+    \item Constant literal division ($x / 8$) vs. Arithmetic right shift ($x \gg 3$) vs. Variable division ($x / \text{div}$).
+    \item Constant modulo ($x \pmod{16}$) vs. Bitwise AND ($x \ \& \ 15$) vs. Variable modulo ($x \pmod{\text{mod}}$).
+    \item Manual two's complement analysis of $x = -9$, inspecting the raw 32-bit binary pattern printed via \texttt{Serial.println((uint32\_t)x, BIN)}.
+\end{enumerate}
+
+\subsection{Observations}
+% Data source: ../data/exp4_bit_tricks.txt (raw Serial Monitor capture from speed_of_numbers.ino, command '4')
+\textit{[Pending: no hardware measurements recorded yet. Run Experiment 4 on the ESP32 and populate \texttt{data/exp4\_bit\_tricks.txt}.]}
+
+\subsection{Analysis}
+\textit{[Pending: analysis withheld until measurements are collected.]}
+
+\subsection{What We Learnt}
+\textit{[Pending.]}
+
+\subsection{LLM Log}
+\begin{llmbox}[LLM Interaction Record: Negative Number Rounding]
+\textbf{Prompt to LLM:} \textit{[Pending: record the verbatim prompt given to the LLM.]} \\
+\textbf{LLM Response Summary:} \textit{[Pending.]} \\
+\textbf{Board Agreement:} \textit{[Pending.]}
+\end{llmbox}

@@ -1,0 +1,107 @@
+% ==============================================================================
+% Preamble: Style, Typography, and Packages for FCA Team Investigation Report
+% ==============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=0.75in,top=0.85in,bottom=0.85in]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{hyperref}
+
+% Color Definitions
+\definecolor{primaryBlue}{HTML}{1E3A8A}    % Deep Navy Blue
+\definecolor{secondaryTeal}{HTML}{0D9488}  % Modern Teal
+\definecolor{darkSlate}{HTML}{1F2937}      % Text Slate
+\definecolor{lightGray}{HTML}{F3F4F6}      % Light background
+\definecolor{tableStripe}{HTML}{F9FAFB}    % Table alternating stripe
+\definecolor{alertRed}{HTML}{DC2626}       % Warning/Highlight Red
+\definecolor{codeBg}{HTML}{F8FAFC}         % Code background
+\definecolor{codeFrame}{HTML}{E2E8F0}      % Code frame
+
+% Hyperref Setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    citecolor=secondaryTeal,
+    urlcolor=primaryBlue,
+    pdfauthor={FCA Team},
+    pdftitle={The Speed of Numbers - ESP32 Latency Investigation}
+}
+
+% Section Titles Styling
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{primaryBlue}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{secondaryTeal}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{darkSlate}}{\thesubsubsection}{1em}{}
+
+% Headers & Footers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gray} FCA: The Speed of Numbers (ESP32)}
+\fancyhead[R]{\small\color{gray} Team Investigation Report}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Listings (Code Syntax Styling)
+\lstdefinestyle{customc}{
+    backgroundcolor=\color{codeBg},
+    basicstyle=\ttfamily\footnotesize\color{darkSlate},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    commentstyle=\color{gray}\itshape,
+    keywordstyle=\color{primaryBlue}\bfseries,
+    stringstyle=\color{secondaryTeal},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    numbersep=7pt,
+    frame=single,
+    rulecolor=\color{codeFrame},
+    tabsize=2,
+    showspaces=false,
+    showstringspaces=false
+}
+\lstset{style=customc}
+
+% Callout Boxes
+\newtcolorbox{calloutbox}[1][]{
+    enhanced,
+    colback=lightGray,
+    colframe=primaryBlue,
+    arc=3mm,
+    boxrule=1pt,
+    left=10pt,right=10pt,top=8pt,bottom=8pt,
+    fonttitle=\bfseries\color{primaryBlue},
+    title=#1,
+    breakable
+}
+
+\newtcolorbox{llmbox}[1][]{
+    enhanced,
+    colback=codeBg,
+    colframe=secondaryTeal,
+    arc=2mm,
+    boxrule=0.75pt,
+    left=8pt,right=8pt,top=6pt,bottom=6pt,
+    fonttitle=\bfseries\small\color{secondaryTeal},
+    title=#1,
+    breakable
+}

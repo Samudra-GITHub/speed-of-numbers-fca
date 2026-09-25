@@ -1,0 +1,34 @@
+\section{Experiment 2: Is Smaller Faster? (Integer Representations)}
+
+\subsection{Aim}
+To investigate how integer data width (\texttt{int8\_t}, \texttt{int16\_t}, \texttt{int32\_t}, \texttt{int64\_t}, and \texttt{uint32\_t}) impacts the execution latency of addition, multiplication, and division on the ESP32's 32-bit Xtensa processor.
+
+\subsection{Background}
+A common misconception among beginner programmers is that smaller data types (e.g., 8-bit \texttt{char} or 16-bit \texttt{short}) compute faster because they contain ``less information.'' However, modern microprocessors are built around a fixed native datapath width. The Espressif ESP32 is powered by the Tensilica Xtensa LX6 dual-core processor, which possesses \textbf{32-bit general-purpose registers} (AR0--AR63) and a 32-bit Arithmetic Logic Unit (ALU). When an 8-bit or 16-bit integer is loaded into a register, the C standard requires integer promotion. Following an arithmetic operation, the processor must enforce overflow and sign rules, which may require extra sign-extension instructions (\texttt{sext}). In contrast, 64-bit integers (\texttt{int64\_t}) exceed the register width and must be manipulated across register pairs using multi-word arithmetic or compiler helper libraries.
+
+\subsection{Prediction (Recorded Prior to Measurement)}
+% TODO(Team): Record your hypothesis here BEFORE running the firmware.
+% Will 8/16-bit be faster than 32-bit? What about 64-bit add/multiply/divide?
+% Will signed vs unsigned division differ?
+\textit{[Pending: team hypothesis not yet recorded.]}
+
+\subsection{Method}
+We instantiated volatile variables for each data type (\texttt{int8\_t}, \texttt{int16\_t}, \texttt{int32\_t}, \texttt{uint32\_t}, \texttt{int64\_t}) and executed unrolled blocks of 100 operations across 10 trials for addition, multiplication, and division. Latency per operation was isolated using our calibrated stopwatch.
+
+\subsection{Observations}
+% Data source: ../data/exp2_integers.txt (raw Serial Monitor capture from speed_of_numbers.ino, command '2')
+\textit{[Pending: no hardware measurements recorded yet. Run Experiment 2 on the ESP32 and populate \texttt{data/exp2\_integers.txt}.]}
+
+\subsection{Analysis}
+% TODO(Team): Write analysis only after real measurements exist above.
+\textit{[Pending: analysis withheld until measurements are collected.]}
+
+\subsection{What We Learnt}
+\textit{[Pending.]}
+
+\subsection{LLM Log}
+\begin{llmbox}[LLM Interaction Record: Integer Width Reasoning]
+\textbf{Prompt to LLM:} \textit{[Pending: record the verbatim prompt given to the LLM.]} \\
+\textbf{LLM Response Summary:} \textit{[Pending.]} \\
+\textbf{Board Agreement:} \textit{[Pending.]}
+\end{llmbox}
