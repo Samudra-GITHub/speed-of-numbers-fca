@@ -1,93 +1,66 @@
-\section{System Overview \& Toolbox Foundations}
+\section{Introduction}
 
-\subsection{Architectural Platform \& Setup}
-All investigations were performed on an \textbf{Espressif ESP32-WROOM-32} development board featuring a dual-core 32-bit Xtensa LX6 microprocessor. Prior to running experiments, the system clock frequency was programmatically queried via \texttt{getCpuFrequencyMhz()} to confirm operation at $240\,\text{MHz}$.
+This report is our submission for the FCA Team Lab ``The Speed of Numbers,'' where we investigate how different ways of representing numbers (integers, floats, fixed-point) affect execution speed on real hardware.
 
-\subsection{Team Organization \& 3-Member Role Rotation}
-In accordance with Section~2 and Section~7 of the lab manual, our three-member team rotated primary investigative responsibilities across all experiments. This ensured that every team member executed each of the four designated roles---\textbf{Builder}, \textbf{Measurer}, \textbf{Skeptic}, and \textbf{Scribe}---at least twice, with the User serving as the architectural Builder and Lead Scribe.
+We are measuring latency on the ESP32 because it is a real, modern microcontroller (dual-core Xtensa LX6 @ 240\,MHz) with a hardware floating-point unit, and because \emph{predicting} performance from source code alone is unreliable --- only measuring on the actual board tells us the truth.
+
+A number can be stored as an integer, a float, or a custom fixed-point format, and each choice has a different cost in CPU cycles and a different tradeoff in accuracy. This report measures those costs directly instead of assuming them.
+
+\subsection{Platform}
+All experiments run on an \textbf{ESP32-WROOM-32} board (dual-core 32-bit Xtensa LX6). Clock frequency is confirmed at $240\,\text{MHz}$ via \texttt{getCpuFrequencyMhz()} before each run.
+
+\subsection{Team Roles}
+Roles (Builder, Measurer, Skeptic, Scribe) rotate across experiments so each member leads more than one role.
 
 \begin{table}[htbp]
 \centering
-\caption{Three-Member Role Allocation and Rotation Matrix Across Experiments}
+\caption{Role Rotation Matrix}
 \label{tab:role_matrix}
 \small
-\begin{tabularx}{\textwidth}{l p{5.5cm} X X X X}
+\begin{tabularx}{\textwidth}{l X X X X}
 \toprule
-\textbf{Task} & \textbf{Experiment Focus} & \textbf{Builder} & \textbf{Measurer} & \textbf{Skeptic} & \textbf{Scribe} \\
+\textbf{Task} & \textbf{Builder} & \textbf{Measurer} & \textbf{Skeptic} & \textbf{Scribe} \\
 \midrule
 \rowcolor{tableStripe}
-Toolbox & Clock \& Overhead Foundations & User & Member 2 & Member 3 & User \\
-Exp 1 & Stopwatch Calibration \& Loop Baseline & User & Member 2 & Member 3 & User \\
+Toolbox & Samudra & Sindhu & Gana & Samudra \\
+Exp 1 & Samudra & Sindhu & Gana & Samudra \\
 \rowcolor{tableStripe}
-Exp 2 & Integer Types (8, 16, 32, 64-bit) & Member 2 & Member 3 & User & User \\
-Exp 3 & Float vs. Double \& Hardware FPU & User & Member 3 & Member 2 & Member 3 \\
+Exp 2 & Sindhu & Gana & Samudra & Samudra \\
+Exp 3 & Samudra & Gana & Sindhu & Gana \\
 \rowcolor{tableStripe}
-Exp 4 & Bit Tricks vs. Arithmetic & Member 3 & User & Member 2 & Member 2 \\
-Exp 5 & Fixed-Point Q16.16 Representation & User & Member 2 & Member 3 & User \\
+Exp 4 & Gana & Samudra & Sindhu & Sindhu \\
+Exp 5 & Samudra & Sindhu & Gana & Samudra \\
 \rowcolor{tableStripe}
-Exp 6 & The Hidden Cost of Printing (UART) & Member 2 & Member 3 & User & Member 3 \\
-Final & 10\,kHz Sensor Latency Budget & User & Member 2 & Member 3 & User \\
+Exp 6 & Sindhu & Gana & Samudra & Gana \\
+Final & Samudra & Sindhu & Gana & Samudra \\
 \rowcolor{tableStripe}
-Synthesis & Summary Comparison \& Reflections & User & Member 2 & Member 3 & User \\
+Synthesis & Samudra & Sindhu & Gana & Samudra \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\subsection{Toolbox Investigations: Answers to the 5 Foundational Questions}
-Before gathering timing measurements, our team formally analyzed the microarchitectural behavior of the ESP32 to resolve the five questions posed in Section~4 of the assignment brief:
+\section{Toolbox Foundations}
+Short answers to the five foundational questions from the assignment brief.
 
-\begin{enumerate}[leftmargin=1.8em, itemsep=8pt]
-    \item \textbf{The ESP32 runs at $240\,\text{MHz}$. How long is one clock cycle?}
+\begin{enumerate}[leftmargin=1.8em, itemsep=6pt]
+    \item \textbf{How long is one clock cycle at 240\,MHz?}
     \begin{equation}
-        T_{\text{clk}} = \frac{1}{f_{\text{cpu}}} = \frac{1}{240 \times 10^6\,\text{s}^{-1}} \approx 4.1667 \times 10^{-9}\,\text{s} = 4.167\,\text{ns}
+        T_{\text{clk}} = \frac{1}{240 \times 10^6\,\text{Hz}} \approx 4.17\,\text{ns}
     \end{equation}
-    At $240\,\text{MHz}$, electrical signals propagate roughly $0.83\,\text{meters}$ through copper traces in one clock cycle. An instruction executing in 1 clock cycle takes just $4.17\,\text{ns}$.
 
-    \item \textbf{A single addition takes a few nanoseconds. Reading the cycle counter also takes some cycles. If you time just one addition, what are you really measuring? How could you fix that?}
-    
-    Reading the hardware cycle count register on the Xtensa architecture executes the assembly instruction \texttt{rsr.ccount, ar}, wrapped inside the Arduino API call \texttt{ESP.getCycleCount()}. Calling this function incurs:
-    \begin{itemize}[noitemsep]
-        \item Function call linkage and branch latency ($\approx 3\text{--}4$ cycles);
-        \item Register read latency of \texttt{rsr.ccount} ($\approx 1\text{--}2$ cycles);
-        \item CPU pipeline serialization and return jump ($\approx 3\text{--}6$ cycles).
-    \end{itemize}
-    In total, two back-to-back calls to \texttt{ESP.getCycleCount()} consume $7\text{--}14$ cycles. If we measure a 1-cycle integer addition between them, the measured latency of $\approx 15$ cycles is $93\%$ instrument overhead and only $7\%$ actual addition!
-    
-    \textbf{The Solution:} We amortize the timer overhead by wrapping the target operation inside an unrolled loop of $N$ repetitions ($N \ge 100$), measuring the total time $T_{\text{total}}$, and calculating the per-operation cost after subtracting the calibrated loop baseline.
+    \item \textbf{If you time just one addition, what are you really measuring?}
+    Mostly the overhead of reading the cycle counter itself, not the addition. \textit{[Pending: exact overhead split depends on Experiment 1 measurements.]} \\
+    \textbf{Fix:} amortize by timing $N$ unrolled operations and dividing by $N$.
 
-    \item \textbf{If you put the operation inside a loop, the loop itself costs time too. How can you find out what the loop costs, so you can remove it from your results?}
-    
-    A loop incurs branching, induction variable incrementation, and conditional comparison overhead (e.g., \texttt{addi}, \texttt{blt}). We solve this using a \textbf{two-stage baseline calibration}:
-    \begin{enumerate}[label=(\alph*), noitemsep]
-        \item Run a baseline loop with an empty payload or memory barrier (\texttt{asm volatile("")}) for $K$ iterations and record $C_{\text{base}}$.
-        \item Run the identical loop executing the target payload $N$ times and record $C_{\text{total}}$.
-        \item Compute the net operation latency:
-        \begin{equation}
-            C_{\text{op}} = \frac{C_{\text{total}} - C_{\text{base}}}{N}
-        \end{equation}
-    \end{enumerate}
+    \item \textbf{How do you find out what the loop itself costs?}
+    Run an empty loop (same shape, no payload) and record its cycle count as the baseline $C_{\text{base}}$. Subtract it from the payload measurement:
+    \begin{equation}
+        C_{\text{op}} = \frac{C_{\text{total}} - C_{\text{base}}}{N}
+    \end{equation}
 
-    \item \textbf{If you run the same test several times, you get slightly different numbers. Should you report the average, the median, or the minimum? Justify your choice.}
-    
-    The ESP32 runs FreeRTOS in the background. Background tasks include the RTOS tick timer interrupt ($1000\,\text{Hz}$ or $100\,\text{Hz}$), cache line replacement, and pipeline hazard stalls.
-    \begin{itemize}[noitemsep]
-        \item \textbf{Average:} Skewed upwards by sporadic interrupt service routines (ISRs).
-        \item \textbf{Median:} Rejects extreme outliers and reflects the typical latency experienced by an RTOS task.
-        \item \textbf{Minimum:} Represents the \textit{true microarchitectural execution limit} of the CPU datapath when no cache misses or hardware interrupts interfere.
-    \end{itemize}
-    \textbf{Justification:} We report the \textbf{Minimum} as the definitive physical cost of the instruction sequence, alongside the \textbf{Median} to demonstrate statistical stability across 10 independent trials.
+    \item \textbf{Average, median, or minimum — which do you report?}
+    We report the \textbf{minimum} (closest to the true hardware cost, least affected by RTOS jitter) alongside the \textbf{median} (typical case, filters outliers).
 
-    \item \textbf{The compiler is clever. If it sees you calculate something and never use it, it may delete the calculation. If it knows the inputs in advance, it may calculate the answer while compiling. How can you stop it from doing this?}
-    
-    Under GCC optimization (\texttt{-O2}), the compiler performs \textit{constant folding} and \textit{dead-code elimination} (DCE). If the inputs are known compile-time constants and the output is unused, the entire loop is deleted, yielding an apparent cycle count of 0!
-    
-    \textbf{Prevention Techniques:}
-    \begin{itemize}[noitemsep]
-        \item Declare input variables as \texttt{volatile}, forcing the compiler to load them from memory/registers on every access.
-        \item Use GCC inline assembly register clobbers:
-        \begin{lstlisting}[language=C]
-asm volatile("" : "+r"(result)); // Informs GCC that 'result' is read and modified
-        \end{lstlisting}
-        \item Accumulate results into a checksum that is printed over the serial port at the end of the test.
-    \end{itemize}
+    \item \textbf{How do you stop the compiler from deleting or pre-computing your benchmark?}
+    Declare operands \texttt{volatile}, or use an inline-assembly clobber (\texttt{asm volatile("" : "+r"(x))}) so GCC cannot fold or eliminate the computation.
 \end{enumerate}

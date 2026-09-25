@@ -1,52 +1,55 @@
 \section{Final Challenge: Meet a Latency Budget (10\,kHz Sensor Loop)}
 
 \subsection{Aim}
-To design, benchmark, and validate a real-time signal processing pipeline operating at a strict $10\,\text{kHz}$ sampling rate ($100\,\mu\text{s}$ period), evaluate three numerical representations (double, float, and integer fixed-point), conduct an exhaustive error sweep across all 4096 ADC codes, and recommend an architectural solution that scales to $50\,\text{kHz}$ and $100\,\text{kHz}$.
-
-\subsection{Background}
-A real-time embedded system must sample a sensor 10,000 times per second. At a CPU clock frequency of $240\,\text{MHz}$, the system latency budget per sample is:
-\begin{equation}
-    T_{\text{budget}} = \frac{1}{10,000\,\text{Hz}} = 100.0\,\mu\text{s} \implies C_{\text{budget}} = 100.0 \times 10^{-6}\,\text{s} \times 240 \times 10^6\,\text{cycles/s} = \mathbf{24,000 \text{ clock cycles}}
-\end{equation}
-The processing pipeline for each sample requires:
-\begin{enumerate}[noitemsep]
-    \item Acquiring a 12-bit ADC reading (\texttt{raw} $\in [0, 4095]$) from GPIO 34.
-    \item Converting the raw code to millivolts: $\text{mV} = \text{raw} \times \frac{3300}{4095}$.
-    \item Applying an 8-sample moving average filter.
-\end{enumerate}
-
-\subsubsection{Integer Optimization Strategy}
-To eliminate floating-point arithmetic entirely:
-\begin{enumerate}[label=(\alph*), noitemsep]
-    \item We derive a fixed-point scaling constant $K$ such that $\text{mV} \approx (\text{raw} \times K) \gg 16$:
-    \begin{equation}
-        K = \text{round}\left( \frac{3300}{4095} \times 65536 \right) = \text{round}(0.8058608 \times 65536) = \mathbf{52813}
-    \end{equation}
-    \item For the 8-sample moving average, we maintain a running accumulator and implement division by 8 using an arithmetic right-shift by 3: $\text{avg} = \text{sum} \gg 3$.
-\end{enumerate}
-
-\subsection{Prediction (Recorded Prior to Measurement)}
-% TODO(Team): Record your hypothesis here BEFORE running the firmware.
-% Where will the bottleneck be (ADC vs arithmetic)? Which pipeline meets
-% the 10 kHz budget? Will integer error stay below the 1 LSB noise floor?
-\textit{[Pending: team hypothesis not yet recorded.]}
+To build a sensor loop that reads an ADC, converts it to millivolts, and filters it, fast enough to run at 10\,kHz ($100\,\mu\text{s}$ budget, $24{,}000$ cycles at 240\,MHz).
 
 \subsection{Method}
-We measured standalone \texttt{analogRead(34)} latency across 10 trials. We then implemented and benchmarked the complete acquisition-conversion-filtering pipeline in \texttt{speed\_of\_numbers.ino} across the three numerical representations. Finally, an automated loop tested every possible integer code from $0$ to $4095$, computing the maximum absolute error of the float and integer implementations relative to 64-bit \texttt{double} ground truth.
+\begin{itemize}[noitemsep]
+    \item Measure \texttt{analogRead(34)} latency alone (10 trials).
+    \item Implement the pipeline (read $\to$ scale to mV $\to$ 8-sample moving average) three ways: double, float, integer fixed-point ($K = 52813$, computed as $\text{round}(3300/4095 \times 65536)$).
+    \item Sweep all 4096 ADC codes and compare float/integer output against double ground truth.
+\end{itemize}
 
 \subsection{Observations}
-% Data source: ../data/final_challenge.txt (raw Serial Monitor capture from speed_of_numbers.ino, command '7')
-\textit{[Pending: no hardware measurements recorded yet. Run the Final Challenge on the ESP32 and populate \texttt{data/final\_challenge.txt}.]}
+% Data source: ../data/final_challenge.txt
+\textit{[Pending: no hardware measurements yet.]}
+
+\begin{table}[htbp]
+\centering
+\caption{Latency Budget Breakdown --- Pending}
+\label{tab:final_obs}
+\small
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+\textbf{Stage / Implementation} & \textbf{Min Cycles} & \textbf{Time ($\mu$s)} \\
+\midrule
+\texttt{analogRead(34)} & PENDING & PENDING \\
+Double pipeline & PENDING & PENDING \\
+Float pipeline & PENDING & PENDING \\
+Integer pipeline & PENDING & PENDING \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Error Sweep vs. Double (0--4095) --- Pending}
+\label{tab:final_error}
+\small
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Representation} & \textbf{Max Abs. Error (mV)} \\
+\midrule
+Float & PENDING \\
+Integer (K=52813) & PENDING \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textit{[Graph Placeholder: Awaiting Hardware Measurement Data from Serial Monitor]}
 
 \subsection{Analysis}
-\textit{[Pending: analysis withheld until measurements are collected.]}
+\textit{[Pending: one short paragraph once measurements exist.]}
 
-\subsection{What We Learnt}
-\textit{[Pending.]}
-
-\subsection{LLM Log}
-\begin{llmbox}[LLM Interaction Record: Integer Scaling Constant K]
-\textbf{Prompt to LLM:} \textit{[Pending: record the verbatim prompt given to the LLM.]} \\
-\textbf{LLM Response Summary:} \textit{[Pending.]} \\
-\textbf{Board Agreement:} \textit{[Pending.]}
-\end{llmbox}
+\subsection{Conclusion}
+\textit{[Pending: written after measurements — state which implementation to ship and why.]}

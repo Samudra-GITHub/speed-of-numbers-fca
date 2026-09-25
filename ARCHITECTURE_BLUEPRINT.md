@@ -555,22 +555,22 @@ The assignment specification explicitly mandates:
 
 ### 10.1 Real Team Roster
 - **Member 1 (User / Lead Architect):** **Samudra Kar** — Primary Builder (Firmware harness) & Master Scribe (\LaTeX{} architecture).
-- **Member 2:** **Teammate 2** — Primary Measurer (Hardware benchmarking & data collection).
-- **Member 3:** **Teammate 3** — Primary Skeptic (Compiler optimization auditor & hardware challenger).
+- **Member 2:** **Sindhu** — Primary Measurer (Hardware benchmarking & data collection).
+- **Member 3:** **Gana** — Primary Skeptic (Compiler optimization auditor & hardware challenger).
 
 ### 10.2 Formal Role Allocation Matrix (`latex/sections/12_team_reflection.tex`)
 
 | Task / Investigation Unit | Builder (Upload & Harness) | Measurer (Benchmarking & Data) | Skeptic (Compiler & Edge Cases) | Scribe (Documentation Lead) |
 |---|---|---|---|---|
-| **Platform & Toolbox** | Samudra Kar | Member 2 | Member 3 | Samudra Kar |
-| **Exp 1: Stopwatch** | Samudra Kar | Member 2 | Member 3 | Samudra Kar |
-| **Exp 2: Integers** | Member 2 | Member 3 | Samudra Kar | Samudra Kar |
-| **Exp 3: Floats** | Samudra Kar | Member 3 | Member 2 | Member 3 |
-| **Exp 4: Bit Tricks** | Member 3 | Samudra Kar | Member 2 | Member 2 |
-| **Exp 5: Fixed Point** | Samudra Kar | Member 2 | Member 3 | Samudra Kar |
-| **Exp 6: Printing** | Member 2 | Member 3 | Samudra Kar | Member 3 |
-| **Final Challenge** | Samudra Kar | Member 2 | Member 3 | Samudra Kar |
-| **Global Synthesis** | Samudra Kar | Member 2 | Member 3 | Samudra Kar |
+| **Platform & Toolbox** | Samudra Kar | Sindhu | Gana | Samudra Kar |
+| **Exp 1: Stopwatch** | Samudra Kar | Sindhu | Gana | Samudra Kar |
+| **Exp 2: Integers** | Sindhu | Gana | Samudra Kar | Samudra Kar |
+| **Exp 3: Floats** | Samudra Kar | Gana | Sindhu | Gana |
+| **Exp 4: Bit Tricks** | Gana | Samudra Kar | Sindhu | Sindhu |
+| **Exp 5: Fixed Point** | Samudra Kar | Sindhu | Gana | Samudra Kar |
+| **Exp 6: Printing** | Sindhu | Gana | Samudra Kar | Gana |
+| **Final Challenge** | Samudra Kar | Sindhu | Gana | Samudra Kar |
+| **Global Synthesis** | Samudra Kar | Sindhu | Gana | Samudra Kar |
 
 *Compliance Verification:* Every single team member leads each of the four roles at least twice across the 9 investigative units.
 
